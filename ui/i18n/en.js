@@ -1,0 +1,77 @@
+// English language pack for NaiHe.
+// To create a new language, copy this file and translate all values.
+
+export default {
+  gateway: {
+    brand: "NaiHe",
+    tagline: "Secure Communication",
+    placeholder: "Passphrase",
+    denied: "Access denied.",
+    wish: "May we meet where there is light.",
+  },
+  dashboard: {
+    header: "NaiHe",
+    sub: "Select a mode to continue.",
+    room: {
+      title: "Secure Room",
+      info: "End-to-end encrypted chat room via MQTT relay.",
+    },
+    cipher: {
+      title: "Cipher Pad",
+      info: "Clipboard encryption — auto-detect and decrypt copied ciphertext.",
+    },
+  },
+  roomSetup: {
+    title: "Secure Room",
+    server: "Server (required)",
+    serverPlaceholder: "your-mqtt-server:1883",
+    serverHint: "MQTT broker address — deploy your own (e.g. EMQX, Mosquitto).",
+    nickname: "Nickname",
+    room: "Room name (must match your peer)",
+    key: "Encryption key (must match your peer)",
+    offline: "Enable offline message queue",
+    offlineHint: "Messages are stored encrypted on your server and pulled on reconnect.",
+    history: "History",
+    saveHistory: "Save encrypted chat history locally",
+    autoClear: "Auto-clear",
+    off: "Off",
+    back: "\u2190 Back",
+    connect: "Connect \u2192",
+  },
+  liveRoom: {
+    waiting: "Waiting for messages...",
+    waitingSub: "Share the room name and key with your peer to start.",
+    placeholder: "Type a message...",
+    clear: "Clear",
+    leave: "Leave",
+    send: "Send",
+  },
+  padSetup: {
+    title: "Cipher Pad",
+    desc: "Auto-detect encrypted text in clipboard and decrypt it. Encrypt plaintext and copy to clipboard.",
+    key: "Encryption key (must match your peer)",
+    back: "\u2190 Back",
+    start: "Start \u2192",
+  },
+  livePad: {
+    auto: "Auto",
+    manual: "Manual",
+    monitoring: "monitoring",
+    waiting: "Monitoring clipboard...",
+    waitingSub: "Copy ciphertext to auto-decrypt, or type below to encrypt.",
+    placeholder: "Type plaintext to encrypt...",
+    encrypt: "Encrypt",
+    decrypt: "Decrypt",
+    ciphertext: "Ciphertext",
+    plaintext: "Plaintext",
+    copy: "Copy",
+    clear: "Clear",
+    exit: "Exit",
+    decrypted: "decrypted",
+    encrypted: "encrypted",
+  },
+  topbar: {
+    light: "Light",
+    dark: "Dark",
+  },
+};

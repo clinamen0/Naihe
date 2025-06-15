@@ -1,0 +1,9 @@
+node_modules/
+dist/
+target/
+src-tauri/gen/
+src-tauri/.cargo/
+*.pdb
+.DS_Store
+Thumbs.db
+src-tauri/icons/extracted/
