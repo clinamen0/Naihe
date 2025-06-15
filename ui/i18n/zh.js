@@ -1,0 +1,77 @@
+// 中文语言包
+// 如需添加新语言，复制此文件并翻译所有值。
+
+export default {
+  gateway: {
+    brand: "NaiHe",
+    tagline: "安全通讯",
+    placeholder: "口令",
+    denied: "口令错误",
+    wish: "愿我们在有光的地方相见",
+  },
+  dashboard: {
+    header: "NaiHe",
+    sub: "选择一个模式继续",
+    room: {
+      title: "加密聊天室",
+      info: "通过 MQTT 中转的端到端加密实时聊天。",
+    },
+    cipher: {
+      title: "密码板",
+      info: "剪贴板加密 — 自动检测并解密复制的密文。",
+    },
+  },
+  roomSetup: {
+    title: "加密聊天室",
+    server: "服务器（必填）",
+    serverPlaceholder: "your-mqtt-server:1883",
+    serverHint: "MQTT 服务器地址 — 部署你自己的服务器（如 EMQX、Mosquitto）。",
+    nickname: "昵称",
+    room: "房间名（双方一致）",
+    key: "加密密钥（双方一致）",
+    offline: "启用离线消息队列",
+    offlineHint: "消息以加密状态暂存在你的服务器上，重连后自动拉取。",
+    history: "聊天记录",
+    saveHistory: "本地保存加密聊天记录",
+    autoClear: "自动清除",
+    off: "关闭",
+    back: "\u2190 返回",
+    connect: "连接 \u2192",
+  },
+  liveRoom: {
+    waiting: "等待消息…",
+    waitingSub: "将房间名和密钥告诉对方即可开始。",
+    placeholder: "输入消息…",
+    clear: "清除",
+    leave: "退出",
+    send: "发送",
+  },
+  padSetup: {
+    title: "密码板",
+    desc: "自动检测剪贴板中的密文并解密。输入明文加密后自动复制到剪贴板。",
+    key: "加密密钥（双方一致）",
+    back: "\u2190 返回",
+    start: "开始 \u2192",
+  },
+  livePad: {
+    auto: "自动",
+    manual: "手动",
+    monitoring: "监控中",
+    waiting: "正在监控剪贴板…",
+    waitingSub: "复制密文自动解密，或在下方输入明文加密。",
+    placeholder: "输入明文以加密…",
+    encrypt: "加密",
+    decrypt: "解密",
+    ciphertext: "密文",
+    plaintext: "明文",
+    copy: "复制",
+    clear: "清除",
+    exit: "退出",
+    decrypted: "已解密",
+    encrypted: "已加密",
+  },
+  topbar: {
+    light: "浅色",
+    dark: "深色",
+  },
+};
