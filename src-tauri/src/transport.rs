@@ -39,18 +39,16 @@ pub fn parse_broker(addr: &str) -> Result<Broker, String> {
 /// Build MQTT options for an ephemeral (public) or persistent (private) session.
 pub fn build_options(
     broker: &Broker,
-    room: &str,
+    _room: &str,
     nickname: &str,
     persistent: bool,
 ) -> MqttOptions {
     let client_id = if persistent {
         // Deterministic ID so the broker can queue messages
-        let room_hash = crate::cipher::room_topic(room);
         let nick_part: String = nickname.chars().take(4).collect();
         format!(
-            "{}{}-{}",
+            "{}-{}",
             config::CLIENT_PREFIX,
-            &room_hash[room_hash.len().saturating_sub(4)..],
             nick_part
         )
     } else {
@@ -86,7 +84,6 @@ pub struct ChatMessage {
 /// Fetch offline messages from the companion HTTP service.
 pub async fn fetch_offline(
     host: &str,
-    topic: &str,
     passphrase: &str,
     since: i64,
 ) -> Result<Vec<ChatMessage>, String> {
@@ -94,7 +91,7 @@ pub async fn fetch_offline(
         "http://{}:{}/messages?topic={}&since={}",
         host,
         config::OFFLINE_SERVICE_PORT,
-        topic,
+        &config::TOPIC,
         since
     );
 

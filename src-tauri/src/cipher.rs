@@ -8,7 +8,6 @@ use chacha20poly1305::{
     ChaCha20Poly1305, Nonce,
 };
 use rand::RngCore;
-use sha2::{Digest, Sha256};
 
 use crate::config;
 
@@ -182,15 +181,6 @@ pub fn resembles_cipher(text: &str) -> bool {
     } else {
         false
     }
-}
-
-/// Hash a room name into an MQTT topic path.
-pub fn room_topic(room: &str) -> String {
-    let mut hasher = Sha256::new();
-    hasher.update(room.trim().as_bytes());
-    let digest = hasher.finalize();
-    let hex: String = digest.iter().take(4).map(|b| format!("{b:02x}")).collect();
-    format!("{}/{hex}", config::TOPIC_PREFIX)
 }
 
 #[cfg(test)]

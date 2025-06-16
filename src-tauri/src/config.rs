@@ -17,9 +17,10 @@ pub const ARGON2_MEMORY_KB: u32 = 65536; // 64 MB
 pub const ARGON2_ITERATIONS: u32 = 3;
 pub const ARGON2_PARALLELISM: u32 = 4;
 
-/// Topic prefix for MQTT channels.
-/// Messages are published to "{TOPIC_PREFIX}/{room_hash}".
-pub const TOPIC_PREFIX: &str = "nh";
+/// Topic for MQTT channels.
+/// Messages are published to "{TOPIC}".
+/// Different channels are distinguished by discarding messages that won't decrypt.
+pub const TOPIC: &str = "nh";
 
 /// Client ID prefix for MQTT connections.
 pub const CLIENT_PREFIX: &str = "nh-";

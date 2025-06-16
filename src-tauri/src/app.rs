@@ -3,7 +3,7 @@
 
 use std::sync::Arc;
 use tokio::sync::Mutex;
-use rumqttc::{AsyncClient, Event, Incoming, QoS};
+use rumqttc::{AsyncClient, Event, Incoming};
 use tauri::{AppHandle, Emitter};
 
 use crate::{cipher, config, shield, transport};
@@ -74,14 +74,13 @@ async fn cmd_connect(
     offline: bool,
 ) -> Result<String, String> {
     let broker = transport::parse_broker(&server)?;
-    let topic = cipher::room_topic(&room);
     let persistent = offline && !server.trim().is_empty();
 
     let opts = transport::build_options(&broker, &room, &nickname, persistent);
     let (client, mut eventloop) = AsyncClient::new(opts, 64);
 
     client
-        .subscribe(&topic, QoS::AtLeastOnce)
+        .subscribe(config::TOPIC, rumqttc::QoS::AtLeastOnce)
         .await
         .map_err(|e| format!("subscribe: {e}"))?;
 
@@ -90,7 +89,7 @@ async fn cmd_connect(
         let mut guard = state.0.lock().await;
         *guard = Some(transport::MqttLink {
             client: client.clone(),
-            topic: topic.clone(),
+            topic: config::TOPIC.to_string(),
             nickname: nickname.clone(),
             passphrase: passphrase.clone(),
             is_persistent: persistent,
@@ -190,10 +189,13 @@ fn history_path(room: &str) -> std::path::PathBuf {
     let dir = std::path::PathBuf::from(base).join("naihe");
     std::fs::create_dir_all(&dir).ok();
 
-    // Reuse cipher module's topic hash for consistent naming
-    let topic = cipher::room_topic(room);
-    let name = topic.replace('/', "_");
-    dir.join(format!("{name}.{}", config::HISTORY_EXT))
+    // Use hash for naming that won't get filesystem corrupted.
+    use sha2::{Digest, Sha256};
+    let mut hasher = Sha256::new();
+    hasher.update(room.trim().as_bytes());
+    let digest = hasher.finalize();
+    let hex: String = digest.iter().take(4).map(|b| format!("{b:02x}")).collect();
+    dir.join(format!("{hex}.{}", config::HISTORY_EXT))
 }
 
 #[tauri::command]
@@ -233,11 +235,10 @@ fn cmd_clear_history(room: String) -> Result<(), String> {
 #[tauri::command]
 async fn cmd_pull_offline(
     server: String,
-    room: String,
+    _room: String,
     passphrase: String,
     since: i64,
 ) -> Result<Vec<transport::ChatMessage>, String> {
     let broker = transport::parse_broker(&server)?;
-    let topic = cipher::room_topic(&room);
-    transport::fetch_offline(&broker.host, &topic, &passphrase, since).await
+    transport::fetch_offline(&broker.host, &passphrase, since).await
 }
